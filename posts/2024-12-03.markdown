@@ -1,4 +1,64 @@
 ---
-title: Functional Programming The Hard Way
+title: Scheme The Hard Way
 ---
 
+The objective of this repository is above all to learn functional programming and pass on some of this learning to you. I think the best way to learn FP is to start with Scheme, but understanding its cousins, Common Lisp and Haskell, will provide a broader perspective on functional programming paradigms and their practical applications.
+
+### What is Scheme?
+
+Scheme is a minimalist dialect of Lisp (LISt Processing), designed in the 1970s by Guy L. Steele and Gerald Jay Sussman. Its primary goal was to provide a clean, small, and elegant subset of Lisp, emphasizing a functional programming paradigm while retaining Lisp’s core principles like symbolic computation and dynamic typing.
+
+Scheme became popular in academia due to its simplicity and suitability for teaching programming concepts, particularly recursion, higher-order functions, and abstraction. It is a language defined by standards, such as the *Revised^n Report on the Algorithmic Language Scheme (RnRS)* and the *IEEE Scheme Standard*. This ensures consistency across its many implementations.
+
+One of Scheme’s distinguishing features is its minimalistic core. Unlike many programming languages that are bloated with features, Scheme keeps its base small, allowing programmers to build more complex abstractions themselves. This philosophy helps in learning fundamental programming concepts without being overwhelmed by the language's syntax or structure.
+
+Scheme also supports:
+
+- **First-class functions:** Functions are treated as values, meaning they can be passed as arguments, returned from other functions, and stored in data structures.
+- **Tail-call optimization:** Efficiently handles recursive calls, making recursion practical for many tasks where iteration might be used in other languages.
+- **Macros:** Powerful tools for creating domain-specific languages and transforming code at compile time.
+- **Homoiconicity:** Code and data share the same structure, allowing for powerful metaprogramming techniques.
+
+Scheme serves as a foundational language for understanding functional programming concepts and the underlying principles of computation. Its simplicity allows learners to focus on problem-solving, while its expressiveness provides a gateway to mastering more complex languages and paradigms.
+
+### Why learn Scheme?
+
+**Scheme** introduces you to the minimalist philosophy of programming, where simplicity and core abstractions are key. It’s excellent for learning recursion, higher-order functions, and symbolic computation.
+
+### Introducing S-Expressions: The DNA of Lisp
+At the heart of Scheme (and Lisp in general) lies one of its most iconic features: the S-Expression, or Symbolic Expression. If you’ve ever seen Scheme or Lisp code, you’ve probably noticed how it seems to revel in parentheses. That’s not just for show — those parentheses represent a deeply practical way to express both code and data in the same structure.
+
+S-expressions are a simple yet powerful way to represent hierarchical data. They consist of atoms (like numbers, strings, or symbols) and lists of atoms or other lists. Here’s an example of a basic S-expression in Scheme:
+
+```scheme
+(+ 1 2 3)
+```
+This might look like a jumble of symbols, but it's actually just a function call! The + is the operator (a function), and 1 2 3 are its arguments. When evaluated, this expression adds the numbers together and returns 6.
+
+#### Why S-Expressions Matter
+S-expressions are Scheme's secret sauce. They embody the idea that code is data and data is code, a property known as homoiconicity. This makes Scheme incredibly flexible. For example, you can:
+
+Treat code as data: Write programs that manipulate or generate other programs.
+Build abstractions with macros: Create your own language constructs by transforming S-expressions.
+Write concise code: The uniform syntax eliminates unnecessary boilerplate, leaving you with pure, expressive logic.
+A Taste of S-Expression Syntax
+Here’s a quick breakdown of how S-expressions work:
+
+Atoms: Basic building blocks like numbers, strings, and symbols.
+
+```scheme
+42         ; A number
+"hello"    ; A string
+foo        ; A symbol
+```
+Lists: Groups of atoms or other lists, surrounded by parentheses.
+
+```scheme
+(a b c)          ; A list of symbols
+(1 2 (3 4))      ; A nested list
+(+ (* 2 3) 4)    ; A function call
+```
+In Scheme, everything you write — whether it’s a simple addition, a loop, or an entire program — is an S-expression. This simplicity makes it easier to reason about your code, transform it, and even use it as a building block for bigger ideas.
+
+#### Why You Should Embrace the Parentheses
+Yes, Scheme has a lot of parentheses. But once you get used to the syntax, you’ll realize that they’re not just a quirk — they’re a feature. The uniform structure of S-expressions makes it easy to parse, manipulate, and read code. Plus, modern editors (like the one you’re customizing with intelli.nvim) handle indentation and matching for you, so you can focus on writing clean, elegant programs.

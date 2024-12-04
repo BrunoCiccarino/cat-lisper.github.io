@@ -1,4 +1,4 @@
-# Changelog for `myblog`
+# Changelog for `ciccabruno`
 
 All notable changes to this project will be documented in this file.
 

@@ -1,8 +1,10 @@
 ---
 title: Scheme The Hard Way
+author: Bruno Ciccarino
+tags: scheme, learning, functional-programming, fp, lisp, lisp-dialect, common-lisp
 ---
 
-The objective of this repository is above all to learn functional programming and pass on some of this learning to you. I think the best way to learn FP is to start with Scheme, but understanding its cousins, Common Lisp and Haskell, will provide a broader perspective on functional programming paradigms and their practical applications.
+The objective of this repository is above all to learn functional programming and pass on some of this learning to you. I think the best way to learn FP is to start with Scheme, will provide a broader perspective on functional programming paradigms and their practical applications.
 
 ### What is Scheme?
 

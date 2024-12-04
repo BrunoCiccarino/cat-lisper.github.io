@@ -1,0 +1,5 @@
+---
+title: Haskell notes for noobs
+author: Bruno Ciccarino
+tags: haskell, learning, functional-programming, fp, miranda 
+---

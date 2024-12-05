@@ -3,3 +3,137 @@ title: Haskell notes for noobs
 author: Bruno Ciccarino
 tags: haskell, learning, functional-programming, fp, miranda 
 ---
+
+Haskell emerged in the mid-1990s, with the aim of being the first purely functional language. For a long time, Haskell was considered an academic language, and therefore difficult, but it is currently used in several companies (in whole or in part of projects), especially fintechs, which are using a lot of haskell.
+
+### Table of contents
+[preparing your development environment](#preparing-your-development-environment)
+[introduction](#introduction)
+[basics](#basics)
+
+### Preparing Your Development Environment
+
+Before diving into Haskell, you'll need to set up your development environment. Here's a quick guide to get started:
+
+1. **Install GHCup**:  
+   GHCup is the recommended way to install Haskell tools like GHC (the Glasgow Haskell Compiler) and Cabal (the Haskell build system). Run the following command in your terminal:  
+
+```bash
+   curl -sSL https://get-ghcup.haskell.org | sh
+```
+Follow the on-screen instructions to complete the installation.
+
+Add GHCup to your PATH:
+If not done automatically, add the following line to your shell configuration file (.bashrc, .zshrc, etc.):
+
+```bash
+export PATH="$HOME/.ghcup/bin:$PATH"
+```
+
+Then reload your shell with source ~/.bashrc or equivalent.
+
+Install GHC and Cabal:
+Use GHCup to install the latest versions of GHC and Cabal:
+
+```bash
+ghcup install ghc
+ghcup install cabal
+```
+
+Verify the installation with:
+
+```bash
+ghc --version
+cabal --version
+```
+
+Set up an IDE or Editor:
+A good editor makes Haskell development more enjoyable. For a lightweight setup, you can use vim or Neovim with the haskell-language-server. Alternatively, VSCode with the Haskell extension offers a modern IDE experience.
+
+### Introduction
+
+In the era of new languages, in the late 1980s, a team was assembled to develop a purely functional language that would later become haskell, named after mathematician Haskell Brooks Curry. 
+
+Haskell with a very rich architecture, a modern, purely functional and non-strict language, specially designed to handle a wide range of applications, from numerical to symbolic. It has an elegant and expressive syntax.
+
+Haskell is specially designed to handle large-scale industrial production applications. It is known for its rich built architecture. Haskell programs are written as mathematical functions. Everything can be done in Haskell, this blog was created in Haskell using the [hakyll](https://jaspervdj.be/hakyll/) static page generator, and don't be scared, it's actually easier than it looks.
+
+### Basics
+
+If you're the kind of horrible person who doesn't read the intros to things and skipped, you might be interested in coming back, as I taught you how to prepare your haskell development environment. In haskell everything is done with function calls, hence the name functional statically, implicitly typed (the types are checked by the compiler, but you don't need to declare them), lazy (nothing is done until it needs to be done). Its closest popular relative is probably the ML family of languages ​​(which are not, however, lazy languages). 
+
+> Note
+> Laziness by default is a very unusual language design. By default, Haskell evaluates something only when it is necessary. As a result, it provides a very elegant way of manipulating infinite structures, for example.
+
+The first thing we're going to do is run ghc's interactive mode and call some function to get a basic idea of ​​haskell. Open your terminal and type ghci . You will be greeted with something like this.
+
+```
+$ ghci
+GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
+ghci>
+```
+
+Okay, now we can make some basic expressions in Haskell so you can get the hang of it. 
+
+#### Simple expressions
+
+You can type most math expressions directly into ghci and get an answer.
+
+```
+$ ghci
+GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
+ghci>  3 * 5
+15
+ghci> 4 ^ 2 - 1
+15
+ghci> (1 - 5)^(3 * 2 - 4)
+16
+ghci>
+```
+
+For strings, it must be enclosed in "double quotes". And to concatenate them use the ++ operator.
+
+```
+ghci> "Hi dear"
+"Hi dear"
+ghci> "Hello" ++ "World"
+"HelloWorld"
+```
+
+To call functions, simply place the arguments directly after the function. There are no parentheses as part of the function call:
+
+```
+ghci> gcd 21 14
+7
+ghci> round 6.59
+7
+ghci> not (5 < 3)
+True
+ghci> truncate 6.59
+6
+ghci> sqrt 2
+1.4142135623730951
+```
+
+#### Hello world
+
+I/O can be used to read and write to the console, to print something on the screen we use putStrLn, putStr or print as in the example below.
+
+```
+ghci> putStrLn "Hello, dear"
+Hello, dear
+ghci> putStr "no line break"
+no line breakghci> print (10 + 10)
+20
+ghci> print ( 1 > 2)
+False
+```
+
+Reading can be done with getLine (which returns a String) or readLn (which returns any type of value you want). The<-O symbol is used to assign a name to the result of an I/O action. 
+
+```haskell
+main = do
+    print "What is your name?"
+    name <- getLine
+    print ("Hello " ++ name ++ "!")
+```

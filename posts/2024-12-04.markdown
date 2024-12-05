@@ -1,5 +1,0 @@
----
-title: Learn haskell in 5 minutes
-author: Bruno Ciccarino
-tags: haskell, learning, functional-programming, fp, miranda 
----

@@ -38,15 +38,6 @@ div#header #navigation a {
     text-transform: uppercase;
 }
 
-div#footer {
-    border-top: solid 2px --fg-primary;
-    color: #555;
-    font-size: 12px;
-    margin-top: 30px;
-    padding: 12px 0px 12px 0px;
-    text-align: right;
-}
-
 h1 {
     font-size: 24px;
 }

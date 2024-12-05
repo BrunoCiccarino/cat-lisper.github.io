@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>ciccabruno - Haskell notes for noobs</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">CiccλBruno</a>
+            </div>
+            <div id="navigation">
+                <a href="../">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../archive.html">Archive</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Haskell notes for noobs</h1>
+
+            <div class="info">
+    Posted on December 10, 2024
+    
+        by Bruno Ciccarino
+    
+</div>
+
+<p>Haskell emerged in the mid-1990s, with the aim of being the first purely functional language. For a long time, Haskell was considered an academic language, and therefore difficult, but it is currently used in several companies (in whole or in part of projects), especially fintechs, which are using a lot of haskell.</p>
+<h3 id="table-of-contents">Table of contents</h3>
+<p><a href="#preparing-your-development-environment">preparing your development environment</a>
+<a href="#introduction">introduction</a>
+<a href="#basics">basics</a></p>
+<h3 id="preparing-your-development-environment">Preparing Your Development Environment</h3>
+<p>Before diving into Haskell, you’ll need to set up your development environment. Here’s a quick guide to get started:</p>
+<ol type="1">
+<li><strong>Install GHCup</strong>:<br />
+GHCup is the recommended way to install Haskell tools like GHC (the Glasgow Haskell Compiler) and Cabal (the Haskell build system). Run the following command in your terminal:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>   <span class="ex">curl</span> <span class="at">-sSL</span> https://get-ghcup.haskell.org <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div>
+<p>Follow the on-screen instructions to complete the installation.</p>
+<p>Add GHCup to your PATH:
+If not done automatically, add the following line to your shell configuration file (.bashrc, .zshrc, etc.):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$HOME</span><span class="st">/.ghcup/bin:</span><span class="va">$PATH</span><span class="st">&quot;</span></span></code></pre></div>
+<p>Then reload your shell with source ~/.bashrc or equivalent.</p>
+<p>Install GHC and Cabal:
+Use GHCup to install the latest versions of GHC and Cabal:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ghcup</span> install ghc</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ghcup</span> install cabal</span></code></pre></div>
+<p>Verify the installation with:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ghc</span> <span class="at">--version</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cabal</span> <span class="at">--version</span></span></code></pre></div>
+<p>Set up an IDE or Editor:
+A good editor makes Haskell development more enjoyable. For a lightweight setup, you can use vim or Neovim with the haskell-language-server. Alternatively, VSCode with the Haskell extension offers a modern IDE experience.</p>
+<h3 id="introduction">Introduction</h3>
+<p>In the era of new languages, in the late 1980s, a team was assembled to develop a purely functional language that would later become haskell, named after mathematician Haskell Brooks Curry.</p>
+<p>Haskell with a very rich architecture, a modern, purely functional and non-strict language, specially designed to handle a wide range of applications, from numerical to symbolic. It has an elegant and expressive syntax.</p>
+<p>Haskell is specially designed to handle large-scale industrial production applications. It is known for its rich built architecture. Haskell programs are written as mathematical functions. Everything can be done in Haskell, this blog was created in Haskell using the <a href="https://jaspervdj.be/hakyll/">hakyll</a> static page generator, and don’t be scared, it’s actually easier than it looks.</p>
+<h3 id="basics">Basics</h3>
+<p>If you’re the kind of horrible person who doesn’t read the intros to things and skipped, you might be interested in coming back, as I taught you how to prepare your haskell development environment. In haskell everything is done with function calls, hence the name functional statically, implicitly typed (the types are checked by the compiler, but you don’t need to declare them), lazy (nothing is done until it needs to be done). Its closest popular relative is probably the ML family of languages ​​(which are not, however, lazy languages).</p>
+<blockquote>
+<p>Note
+Laziness by default is a very unusual language design. By default, Haskell evaluates something only when it is necessary. As a result, it provides a very elegant way of manipulating infinite structures, for example.</p>
+</blockquote>
+<p>The first thing we’re going to do is run ghc’s interactive mode and call some function to get a basic idea of ​​haskell. Open your terminal and type ghci . You will be greeted with something like this.</p>
+<pre><code>$ ghci
+GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
+ghci&gt;</code></pre>
+<p>Okay, now we can make some basic expressions in Haskell so you can get the hang of it.</p>
+<h4 id="simple-expressions">Simple expressions</h4>
+<p>You can type most math expressions directly into ghci and get an answer.</p>
+<pre><code>$ ghci
+GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
+ghci&gt;  3 * 5
+15
+ghci&gt; 4 ^ 2 - 1
+15
+ghci&gt; (1 - 5)^(3 * 2 - 4)
+16
+ghci&gt;</code></pre>
+<p>For strings, it must be enclosed in “double quotes”. And to concatenate them use the ++ operator.</p>
+<pre><code>ghci&gt; &quot;Hi dear&quot;
+&quot;Hi dear&quot;
+ghci&gt; &quot;Hello&quot; ++ &quot;World&quot;
+&quot;HelloWorld&quot;</code></pre>
+<p>To call functions, simply place the arguments directly after the function. There are no parentheses as part of the function call:</p>
+<pre><code>ghci&gt; gcd 21 14
+7
+ghci&gt; round 6.59
+7
+ghci&gt; not (5 &lt; 3)
+True
+ghci&gt; truncate 6.59
+6
+ghci&gt; sqrt 2
+1.4142135623730951</code></pre>
+<h4 id="hello-world">Hello world</h4>
+<p>I/O can be used to read and write to the console like this</p>
+<pre><code>ghci&gt; putStrLn &quot;Hello, dear&quot;
+Hello, dear
+ghci&gt; putStr &quot;no line break&quot;
+no line breakghci&gt; print (10 + 10)
+20
+ghci&gt; print ( 1 &gt; 2)
+False</code></pre>
+<p>Reading can be done with getLine (which returns a String) or readLn (which returns any type of value you want). The&lt;-O symbol is used to assign a name to the result of an I/O action.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> <span class="st">&quot;What is your name?&quot;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    name <span class="ot">&lt;-</span> <span class="fu">getLine</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> (<span class="st">&quot;Hello &quot;</span> <span class="op">++</span> name <span class="op">++</span> <span class="st">&quot;!&quot;</span>)</span></code></pre></div>
+
+        </div>
+    </body>
+</html>

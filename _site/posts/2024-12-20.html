@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>CiccaBruno - Scheme The Hard Way</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">My Hakyll Blog</a>
+            </div>
+            <div id="navigation">
+                <a href="../">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../archive.html">Archive</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Scheme The Hard Way</h1>
+
+            <div class="info">
+    Posted on December 20, 2024
+    
+        by Bruno Ciccarino
+    
+</div>
+
+<p>The objective of this repository is above all to learn functional programming and pass on some of this learning to you. I think the best way to learn FP is to start with Scheme, will provide a broader perspective on functional programming paradigms and their practical applications.</p>
+<h3 id="what-is-scheme">What is Scheme?</h3>
+<p>Scheme is a minimalist dialect of Lisp (LISt Processing), designed in the 1970s by Guy L. Steele and Gerald Jay Sussman. Its primary goal was to provide a clean, small, and elegant subset of Lisp, emphasizing a functional programming paradigm while retaining Lisp’s core principles like symbolic computation and dynamic typing.</p>
+<p>Scheme became popular in academia due to its simplicity and suitability for teaching programming concepts, particularly recursion, higher-order functions, and abstraction. It is a language defined by standards, such as the <em>Revised^n Report on the Algorithmic Language Scheme (RnRS)</em> and the <em>IEEE Scheme Standard</em>. This ensures consistency across its many implementations.</p>
+<p>One of Scheme’s distinguishing features is its minimalistic core. Unlike many programming languages that are bloated with features, Scheme keeps its base small, allowing programmers to build more complex abstractions themselves. This philosophy helps in learning fundamental programming concepts without being overwhelmed by the language’s syntax or structure.</p>
+<p>Scheme also supports:</p>
+<ul>
+<li><strong>First-class functions:</strong> Functions are treated as values, meaning they can be passed as arguments, returned from other functions, and stored in data structures.</li>
+<li><strong>Tail-call optimization:</strong> Efficiently handles recursive calls, making recursion practical for many tasks where iteration might be used in other languages.</li>
+<li><strong>Macros:</strong> Powerful tools for creating domain-specific languages and transforming code at compile time.</li>
+<li><strong>Homoiconicity:</strong> Code and data share the same structure, allowing for powerful metaprogramming techniques.</li>
+</ul>
+<p>Scheme serves as a foundational language for understanding functional programming concepts and the underlying principles of computation. Its simplicity allows learners to focus on problem-solving, while its expressiveness provides a gateway to mastering more complex languages and paradigms.</p>
+<h3 id="why-learn-scheme">Why learn Scheme?</h3>
+<p><strong>Scheme</strong> introduces you to the minimalist philosophy of programming, where simplicity and core abstractions are key. It’s excellent for learning recursion, higher-order functions, and symbolic computation.</p>
+<h3 id="introducing-s-expressions-the-dna-of-lisp">Introducing S-Expressions: The DNA of Lisp</h3>
+<p>At the heart of Scheme (and Lisp in general) lies one of its most iconic features: the S-Expression, or Symbolic Expression. If you’ve ever seen Scheme or Lisp code, you’ve probably noticed how it seems to revel in parentheses. That’s not just for show — those parentheses represent a deeply practical way to express both code and data in the same structure.</p>
+<p>S-expressions are a simple yet powerful way to represent hierarchical data. They consist of atoms (like numbers, strings, or symbols) and lists of atoms or other lists. Here’s an example of a basic S-expression in Scheme:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scheme"><code class="sourceCode scheme"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="op">+</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>)</span></code></pre></div>
+<p>This might look like a jumble of symbols, but it’s actually just a function call! The + is the operator (a function), and 1 2 3 are its arguments. When evaluated, this expression adds the numbers together and returns 6.</p>
+<h4 id="why-s-expressions-matter">Why S-Expressions Matter</h4>
+<p>S-expressions are Scheme’s secret sauce. They embody the idea that code is data and data is code, a property known as homoiconicity. This makes Scheme incredibly flexible. For example, you can:</p>
+<p>Treat code as data: Write programs that manipulate or generate other programs.
+Build abstractions with macros: Create your own language constructs by transforming S-expressions.
+Write concise code: The uniform syntax eliminates unnecessary boilerplate, leaving you with pure, expressive logic.
+A Taste of S-Expression Syntax
+Here’s a quick breakdown of how S-expressions work:</p>
+<p>Atoms: Basic building blocks like numbers, strings, and symbols.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scheme"><code class="sourceCode scheme"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span>         <span class="co">; A number</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;hello&quot;</span>    <span class="co">; A string</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>foo        <span class="co">; A symbol</span></span></code></pre></div>
+<p>Lists: Groups of atoms or other lists, surrounded by parentheses.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode scheme"><code class="sourceCode scheme"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(a b c)          <span class="co">; A list of symbols</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="dv">2</span> (<span class="dv">3</span> <span class="dv">4</span>))      <span class="co">; A nested list</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>(<span class="op">+</span> (<span class="op">*</span> <span class="dv">2</span> <span class="dv">3</span>) <span class="dv">4</span>)    <span class="co">; A function call</span></span></code></pre></div>
+<p>In Scheme, everything you write — whether it’s a simple addition, a loop, or an entire program — is an S-expression. This simplicity makes it easier to reason about your code, transform it, and even use it as a building block for bigger ideas.</p>
+<h4 id="why-you-should-embrace-the-parentheses">Why You Should Embrace the Parentheses</h4>
+<p>Yes, Scheme has a lot of parentheses. But once you get used to the syntax, you’ll realize that they’re not just a quirk — they’re a feature. The uniform structure of S-expressions makes it easy to parse, manipulate, and read code. Plus, modern editors (like the one you’re customizing with intelli.nvim) handle indentation and matching for you, so you can focus on writing clean, elegant programs.</p>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>

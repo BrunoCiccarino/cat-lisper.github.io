@@ -7,11 +7,13 @@ tags: haskell, learning, functional-programming, fp, miranda
 Haskell emerged in the mid-1990s, with the aim of being the first purely functional language. For a long time, Haskell was considered an academic language, and therefore difficult, but it is currently used in several companies (in whole or in part of projects), especially fintechs, which are using a lot of haskell.
 
 ### Table of contents
-[preparing your development environment](#preparing-your-development-environment)
-[introduction](#introduction)
-[basics](#basics)
+[01) introduction](#introduction)
+[02) basics](#basics)
+[03) simple expression](#simple-expressions)
+[04) Hello world](#hello-world)
+[05) high order function](#high-order-function)
 
-### Preparing Your Development Environment
+### Introduction
 
 Before diving into Haskell, you'll need to set up your development environment. Here's a quick guide to get started:
 
@@ -47,10 +49,43 @@ ghc --version
 cabal --version
 ```
 
-Set up an IDE or Editor:
+**Install stack**
+The Haskell Stack is a cross-platform program that allows the development of Haskell projects. And to install just type these commands in your terminal (the commands may change depending on your package manager)
+
+```bash
+sudo apt-get install haskell-stack
+```
+
+**Set up an IDE or Editor**:
 A good editor makes Haskell development more enjoyable. For a lightweight setup, you can use vim or Neovim with the haskell-language-server. Alternatively, VSCode with the Haskell extension offers a modern IDE experience.
 
-### Introduction
+The first thing we're going to do is run ghc's interactive mode and call some function to get a basic idea of ​​haskell. Open your terminal and type ghci . You will be greeted with something like this.
+
+```
+$ ghci
+GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
+ghci>
+```
+
+Now, with the stack we downloaded, create a project by typing 
+
+stack new Haskell-notes-for-noobs
+
+simple then it will create the project with the simple template, preparing our environment so that we can learn Haskell in the best way.
+
+It will create a structure similar to this
+
+```
+[03:23 PM]-[charon@DESKTOP-27DNBRN]-[~]- |main U:8 ?:64 ✗|
+$ cd Haskell-notes-for-noobs
+/home/charon/Haskell-notes-for-noobs
+
+[03:23 PM]-[charon@DESKTOP-27DNBRN]-[~/Haskell-notes-for-noobs]- |main U:8 ?:64 ✗|
+$ ls
+CHANGELOG.md  Haskell-notes-for-noobs.cabal  LICENSE  README.md  Setup.hs  app  package.yaml  src  stack.yaml  test
+```
+
+This is the folder we will use to do everything in this cookbook, for anyone who wants the codes, all the codes, including the answers to the challenges, they will be in this github repository: [haskell-notes-for-noobs](https://github.com/BrunoCiccarino/Haskell-notes-for-noobs)
 
 In the era of new languages, in the late 1980s, a team was assembled to develop a purely functional language that would later become haskell, named after mathematician Haskell Brooks Curry. 
 
@@ -62,16 +97,7 @@ Haskell is specially designed to handle large-scale industrial production applic
 
 If you're the kind of horrible person who doesn't read the intros to things and skipped, you might be interested in coming back, as I taught you how to prepare your haskell development environment. In haskell everything is done with function calls, hence the name functional statically, implicitly typed (the types are checked by the compiler, but you don't need to declare them), lazy (nothing is done until it needs to be done). Its closest popular relative is probably the ML family of languages ​​(which are not, however, lazy languages). 
 
-> Note
 > Laziness by default is a very unusual language design. By default, Haskell evaluates something only when it is necessary. As a result, it provides a very elegant way of manipulating infinite structures, for example.
-
-The first thing we're going to do is run ghc's interactive mode and call some function to get a basic idea of ​​haskell. Open your terminal and type ghci . You will be greeted with something like this.
-
-```
-$ ghci
-GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
-ghci>
-```
 
 Okay, now we can make some basic expressions in Haskell so you can get the hang of it. 
 
@@ -115,6 +141,13 @@ ghci> sqrt 2
 1.4142135623730951
 ```
 
+**Challenge**
+- In the Haskell repl (read eval print loop) determine the value of each of the powers below.
+
+- a. 25^1
+- b. 150^0
+- c. (7/9)^-2
+
 #### Hello world
 
 I/O can be used to read and write to the console, to print something on the screen we use putStrLn, putStr or print as in the example below.
@@ -136,4 +169,45 @@ main = do
     print "What is your name?"
     name <- getLine
     print ("Hello " ++ name ++ "!")
+```
+
+**Chalenge**
+- modify this code to ask how old you are
+
+#### High order function
+
+In haskell functions can receive functions as parameters, allowing the creation of generic functions, composing two or more functions and defining specific domain languages. Higher-order functions are not just a part of the Haskell experience, they are practically the Haskell experience. It turns out that if you want to define computations by defining what things are rather than defining steps that change some state and perhaps looping them, higher order functions are indispensable. They are a really powerful way of solving problems and thinking about programs.
+
+Officially, each function in Haskell only accepts one parameter. So how is it possible that we have defined and used multiple functions that accept more than one parameter so far? Well, it's a clever trick! All functions that accepted multiple parameters so far have been curried functions. What does this mean? You will understand better with an example. Let's take our good friend, the max function. It appears that it accepts two parameters and returns the larger one. Doing max 7 8 first creates a function that accepts a parameter and returns 7 or that parameter, depending on which is greater. Then 8 is applied to that function and that function produces the desired result. It sounds like a mouthful, but it's actually a really cool concept. The following two calls are equivalent:
+
+```
+ghci> max 7 8
+8
+ghci> (max 7) 8
+8
+```
+
+Putting a space between two things is simply function application. Space is like an operator and has the highest precedence. Let's look at the type of max. It's max :: (Ord a) => a -> a -> a. This can also be written as max :: (Ord a) => a -> (a -> a). This can be read as: max takes an a and returns (this is the ->) a function that takes an a and returns an a. This is why the return type and function parameters are all simply separated with arrows.
+
+> The operator => in Haskell: This operator separates the constraints (on type variables) from the rest of the type signature. For instance, in max :: (Ord a) => a -> a -> a, the Ord a constraint indicates that the type a must belong to the Ord type class, which means it supports ordering operations like <, >, and compare. The part after the => describes the actual function signature.
+
+So how is this beneficial for us? Simply put, if we call a function with few parameters, we get back a partially applied function, that is, a function that takes in as many parameters as we left out. Using partial application (calling functions with few parameters, if you prefer) is a cool way to create functions on the fly so we can pass them to another function or seed them with some data.
+
+Take a look at this offensively simple function:
+
+```
+addThree :: Int -> Int -> Int -> Int
+addThree x y z = x + y + z
+```
+
+**Output**:
+
+```
+ghci> :l addThree.hs
+[1 of 2] Compiling Main             ( addThree.hs, interpreted )
+Ok, one module loaded.
+ghci> addTwoMore = addThree 5
+ghci> result = addTwoMore 10 15
+ghci> print(result)
+30
 ```

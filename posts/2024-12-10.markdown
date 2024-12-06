@@ -8,10 +8,11 @@ Haskell emerged in the mid-1990s, with the aim of being the first purely functio
 
 ### Table of contents
 [01) introduction](#introduction)
-[02) basics](#basics)
-[03) simple expression](#simple-expressions)
-[04) Hello world](#hello-world)
-[05) high order function](#high-order-function)
+[02) contextualizing](#contextualizing)
+[03) basics](#basics)
+[04) simple expression](#simple-expressions)
+[05) Hello world](#hello-world)
+[06) high order function](#high-order-function)
 
 ### Introduction
 
@@ -86,6 +87,8 @@ CHANGELOG.md  Haskell-notes-for-noobs.cabal  LICENSE  README.md  Setup.hs  app  
 ```
 
 This is the folder we will use to do everything in this cookbook, for anyone who wants the codes, all the codes, including the answers to the challenges, they will be in this github repository: [haskell-notes-for-noobs](https://github.com/BrunoCiccarino/Haskell-notes-for-noobs)
+
+### **contextualizing**
 
 In the era of new languages, in the late 1980s, a team was assembled to develop a purely functional language that would later become haskell, named after mathematician Haskell Brooks Curry. 
 

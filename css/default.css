@@ -4,10 +4,8 @@
 }
 
 @font-face {
-    font-family: 'JetBrainsMono Bold';
+    font-family: 'JetBrainsMono-Bold';
     src: url('./fonts/JetBrainsMono-Bold.ttf') format('truetype');
-    font-weight: normal;
-    font-size: normal;
 }
 
 body {

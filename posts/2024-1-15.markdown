@@ -6,6 +6,13 @@ tags: haskell, learning, functional-programming, fp, miranda
 
 Haskell emerged in the mid-1990s, with the aim of being the first purely functional language. For a long time, Haskell was considered an academic language, and therefore difficult, but it is currently used in several companies (in whole or in part of projects), especially fintechs, which are using a lot of haskell.
 
+### References: 
+
+[Haskell the hard way](https://web.archive.org/web/20240820205228/https://yannesposito.com/Scratch/en/blog/Haskell-the-Hard-Way/)
+[Real world haskell](https://book.realworldhaskell.org/read/why-functional-programming-why-haskell.html)
+[Learn you haskell](https://web.archive.org/web/20240816183510/https://learnyouahaskell.com/)
+[Haskell notes for professionals](https://goalkicker.com/HaskellBook/)
+
 ### Table of contents
 [01) introduction](#introduction)
 [02) contextualizing](#contextualizing)
@@ -13,6 +20,8 @@ Haskell emerged in the mid-1990s, with the aim of being the first purely functio
 [04) simple expression](#simple-expressions)
 [05) Hello world](#hello-world)
 [06) high order function](#high-order-function)
+[07) Primitive types](#primitive-types)
+[08) Type inference](#type-inference)
 
 ### Introduction
 
@@ -100,7 +109,7 @@ Haskell is specially designed to handle large-scale industrial production applic
 
 If you're the kind of horrible person who doesn't read the intros to things and skipped, you might be interested in coming back, as I taught you how to prepare your haskell development environment. In haskell everything is done with function calls, hence the name functional statically, implicitly typed (the types are checked by the compiler, but you don't need to declare them), lazy (nothing is done until it needs to be done). Its closest popular relative is probably the ML family of languages ​​(which are not, however, lazy languages). 
 
-> Laziness by default is a very unusual language design. By default, Haskell evaluates something only when it is necessary. As a result, it provides a very elegant way of manipulating infinite structures, for example.
+> Note: Laziness by default is a very unusual language design. By default, Haskell evaluates something only when it is necessary. As a result, it provides a very elegant way of manipulating infinite structures, for example.
 
 Okay, now we can make some basic expressions in Haskell so you can get the hang of it. 
 
@@ -177,7 +186,19 @@ main = do
 **Chalenge**
 - modify this code to ask how old you are
 
-#### High order function
+#### Functions and High order function
+
+To apply a function in Haskell, we write the function name followed by its arguments. We do not use parentheses or commas to group or separate a function's arguments; just write the name of the function, followed by each argument in turn. As an example, let's apply the compare function, which takes two arguments.
+
+```haskell
+ghci> compare 2 3
+LT
+ghci> compare 3 3
+EQ
+ghci> compare 3 2
+GT
+ghci>
+```
 
 In haskell functions can receive functions as parameters, allowing the creation of generic functions, composing two or more functions and defining specific domain languages. Higher-order functions are not just a part of the Haskell experience, they are practically the Haskell experience. It turns out that if you want to define computations by defining what things are rather than defining steps that change some state and perhaps looping them, higher order functions are indispensable. They are a really powerful way of solving problems and thinking about programs.
 
@@ -192,7 +213,7 @@ ghci> (max 7) 8
 
 Putting a space between two things is simply function application. Space is like an operator and has the highest precedence. Let's look at the type of max. It's max :: (Ord a) => a -> a -> a. This can also be written as max :: (Ord a) => a -> (a -> a). This can be read as: max takes an a and returns (this is the ->) a function that takes an a and returns an a. This is why the return type and function parameters are all simply separated with arrows.
 
-> The operator => in Haskell: This operator separates the constraints (on type variables) from the rest of the type signature. For instance, in max :: (Ord a) => a -> a -> a, the Ord a constraint indicates that the type a must belong to the Ord type class, which means it supports ordering operations like <, >, and compare. The part after the => describes the actual function signature.
+> Note: The operator => in Haskell: This operator separates the constraints (on type variables) from the rest of the type signature. For instance, in max :: (Ord a) => a -> a -> a, the Ord a constraint indicates that the type a must belong to the Ord type class, which means it supports ordering operations like <, >, and compare. The part after the => describes the actual function signature.
 
 So how is this beneficial for us? Simply put, if we call a function with few parameters, we get back a partially applied function, that is, a function that takes in as many parameters as we left out. Using partial application (calling functions with few parameters, if you prefer) is a cool way to create functions on the fly so we can pass them to another function or seed them with some data.
 
@@ -214,3 +235,114 @@ ghci> result = addTwoMore 10 15
 ghci> print(result)
 30
 ```
+
+### Primitive types
+
+In Haskell, types are how you describe the data your program will work with. Primitive types are types that are a collection of values ​​related to each other, for example: Int comprises the values ​​of integers, Bool contains only the values ​​True and False, etc... In haskell we use the following notation to define types: value :: type. Below are some examples of the types:
+
+```haskell
+False :: Bool
+True :: Bool
+10 :: Int
+``` 
+
+> Note: In haskell it is important to remember that types always start with a capital letter
+
+**Some of these types are**: 
+
+- Bool: Contains True and False values. Boolean expressions can be executed with the operators && (and), || (or) and not
+- Char: Contains all characters in the Unicode system.
+- String: sequences of characters delimited by double quotes.
+- Int: Integers with fixed precision in 64 bits. Represents values ​​from -2^63 to 2^63 - 1.
+- Integer: Integers of arbitrary precision. Represents integer values ​​of any precision memory is the limit. Slower than Int operations.
+- Float: floating point values ​​with single precision. Allows you to represent numbers with a total of 7 digits, on average.
+- Double: double precision floating point values ​​that allow representing a total of 16 digits on average
+
+**lists**
+
+Lists are sequences of elements of the same type grouped by square brackets and separated by commas. We can make lists of any type, for example:
+
+```haskell
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+['1', 'a', 's', 'o', 'A']
+```
+
+> Note: that the last list is a list of strings, as all elements are enclosed in single quotes
+
+We can also have lists of lists, For example: 
+
+```haskell
+[[1, 2, 3] [4, 5, 6]] :: [[Int]]
+[['h', 'e', 'l', 'l', 'o'] ['w', 'o', 'r', 'l', 'd']] :: [[Char]]
+```
+
+- The list type does not specify its size
+- There are no limitations regarding the type of list
+- There are no limitations on the size of the list
+
+**tuples** 
+
+Tuples are finite sequences of components containing zero or more different types: 
+
+```haskell
+(True, False) :: (Bool, Bool)
+(1.0, "Yes", False) :: (Double, String, Bool)
+```
+
+We can also have lists of tuples:
+
+```haskell
+[(1, 2, 'a', False)] :: [(Int, Int, Char, Bool)]
+```
+
+> Note: It is important to remember that in haskell lists and tuples are immutable, unlike most languages, in haskell all types are immutable.
+> Note: If you've ever studied Python, you're probably used to lists and tuples being almost interchangeable (or using them in the same way). Although the elements of a Python tuple are immutable, it can be indexed and iterated using the same methods as a list. This is not the case in Haskell, so don't try to take this idea with you into unfamiliar linguistic territory.
+
+- The type of the tuple specifies its size
+- There are no limitations on the types associated with the tuple (we can have tuples of tuples)
+- Tuples must have a finite size
+- Arity 1 tuples are not allowed to maintain compatibility with the use of parentheses as an evaluation order.
+
+For example, if we went to ghci and tried to define a tuple `fst` with a single value (42), what do you think would happen?
+
+```haskell
+GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
+ghci> fst (42)
+
+<interactive>:1:1: error:
+    • Could not deduce (Num (a, b0))
+      from the context: Num (a, b)
+        bound by the inferred type for ‘it’:
+                   forall {a} {b}. Num (a, b) => a
+        at <interactive>:1:1-8
+      The type variable ‘b0’ is ambiguous
+    • In the ambiguity check for the inferred type for ‘it’
+      To defer the ambiguity check to use sites, enable AllowAmbiguousTypes
+      When checking the inferred type
+        it :: forall {a} {b}. Num (a, b) => a
+```
+
+On the other hand, we can have tuples of zero arity, that is, a tuple that contains zero elements within it. When a tuple has zero arity, it is called a unit, throughout this cookbook we will see more about!
+
+### Type inference
+
+Finally! Let's talk about this subject that makes our lives so much easier, type inference, let the compiler detect for you the type that is being used, this is called type inference!!
+
+Haskell uses the Hindley Milner type inference system, but I will explain this better in the future. 
+
+### What to expect from type inference? 
+
+While strong, static typing makes Haskell safe, type inference makes it essential. The result is stunning: we end up with a language that is safer than popular statically typed languages ​​and often more expressive than dynamically typed languages.
+
+Wait, what do you mean by "type inference makes it essential"? How is it stunning?
+
+Great question! Here's the deal: Haskell uses something called *type inference*. This means you don't always have to explicitly declare the type of every variable or function. The compiler is smart enough to figure it out on its own in many cases, even logical errors it points out in your code.
+
+Now, combine that with *strong, static typing*. This ensures your code is super safe because the types are checked at compile time, so a lot of potential errors are caught before your program even runs.
+
+Okay, so what makes this better than other languages?
+
+Good point. In many statically typed languages, you have to write a lot of type annotations, which can feel repetitive or cumbersome. On the other hand, dynamically typed languages are expressive but might not catch type-related errors until runtime. 
+
+Haskell hits this sweet spot: it's as safe as statically typed languages (or even safer) but often as expressive and concise as dynamically typed ones. That balance is what makes it *stunning*.
+

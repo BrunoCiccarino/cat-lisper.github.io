@@ -187,6 +187,8 @@ False
 
 Reading can be done with getLine (which returns a String) or readLn (which returns any type of value you want). The<-O symbol is used to assign a name to the result of an I/O action. 
 
+> Note: I/O is impure, as it is a side effect, we will see this later in the pure functions session
+
 ```haskell
 main = do
     print "What is your name?"

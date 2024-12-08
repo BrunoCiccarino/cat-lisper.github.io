@@ -1,27 +1,34 @@
 ---
 title: Haskell notes for noobs
 author: Bruno Ciccarino
-tags: haskell, learning, functional-programming, fp, miranda 
+tags: haskell, learning, functional-programming, fp, miranda
+date: "2025-01-15T00:00:00Z" 
 ---
 
 Haskell emerged in the mid-1990s, with the aim of being the first purely functional language. For a long time, Haskell was considered an academic language, and therefore difficult, but it is currently used in several companies (in whole or in part of projects), especially fintechs, which are using a lot of haskell.
 
 ### References: 
 
-[Haskell the hard way](https://web.archive.org/web/20240820205228/https://yannesposito.com/Scratch/en/blog/Haskell-the-Hard-Way/)
-[Real world haskell](https://book.realworldhaskell.org/read/why-functional-programming-why-haskell.html)
-[Learn you haskell](https://web.archive.org/web/20240816183510/https://learnyouahaskell.com/)
-[Haskell notes for professionals](https://goalkicker.com/HaskellBook/)
+- [Haskell the hard way](https://web.archive.org/web/20240820205228/https://yannesposito.com/Scratch/en/blog/Haskell-the-Hard-Way/)
+- [Real world haskell](https://book.realworldhaskell.org/read/why-functional-programming-why-haskell.html)
+- [Learn you haskell](https://web.archive.org/web/20240816183510/https://learnyouahaskell.com/)
+- [Haskell notes for professionals](https://goalkicker.com/HaskellBook/)
 
 ### Table of contents
-[01) introduction](#introduction)
-[02) contextualizing](#contextualizing)
-[03) basics](#basics)
-[04) simple expression](#simple-expressions)
-[05) Hello world](#hello-world)
-[06) high order function](#high-order-function)
-[07) Primitive types](#primitive-types)
-[08) Type inference](#type-inference)
+
+- [References:](#references)
+- [Table of contents](#table-of-contents)
+- [Introduction](#introduction)
+- [**contextualizing**](#contextualizing)
+- [Basics](#basics)
+  - [Simple expressions](#simple-expressions)
+  - [Hello world](#hello-world)
+  - [Functions and High order function](#functions-and-high-order-function)
+  - [Pure functions](#pure-functions)
+  - [Primitive types](#primitive-types)
+  - [Type inference](#type-inference)
+  - [What to expect from type inference?](#what-to-expect-from-type-inference)
+  - [Conditional operations](#conditional-operations)
 
 ### Introduction
 
@@ -236,7 +243,24 @@ ghci> print(result)
 30
 ```
 
-### Primitive types
+#### Pure functions
+
+In haskell we have a concept of "pure functions", and then you tell me, what are pure functions? And I answer: 
+
+For a function to be pure, it has to satisfy two requirements
+
+- It always returns the same result for the same arguments. 
+- It cannot have side effects
+
+But what does this mean? 
+
+Side effects are things like printing to the screen, reading/writing files, or communicating with other computers on the Internet are examples of side effects. In other words, most interactions with the outside world — almost everything that makes computers useful! — involves side effects.
+
+Haskell encourages the use of pure functions, as they are easier to reason about than non-pure functions. In fact, pure functions in Haskell are very similar to functions used in mathematics. Mathematical functions are pure: they have no side effects and no states.
+
+But there's a big problem with pure functions: they don't allow for certain vital and useful functions. For example, a function that opens a file on disk cannot be pure because its results will depend on whether the file exists or not. A function that returns input from a use is also not pure because it may return different results every time it is called (i.e., the user may type different input).
+
+#### Primitive types
 
 In Haskell, types are how you describe the data your program will work with. Primitive types are types that are a collection of values ​​related to each other, for example: Int comprises the values ​​of integers, Bool contains only the values ​​True and False, etc... In haskell we use the following notation to define types: value :: type. Below are some examples of the types:
 
@@ -324,13 +348,13 @@ ghci> fst (42)
 
 On the other hand, we can have tuples of zero arity, that is, a tuple that contains zero elements within it. When a tuple has zero arity, it is called a unit, throughout this cookbook we will see more about!
 
-### Type inference
+#### Type inference
 
 Finally! Let's talk about this subject that makes our lives so much easier, type inference, let the compiler detect for you the type that is being used, this is called type inference!!
 
 Haskell uses the Hindley Milner type inference system, but I will explain this better in the future. 
 
-### What to expect from type inference? 
+#### What to expect from type inference? 
 
 While strong, static typing makes Haskell safe, type inference makes it essential. The result is stunning: we end up with a language that is safer than popular statically typed languages ​​and often more expressive than dynamically typed languages.
 
@@ -346,3 +370,48 @@ Good point. In many statically typed languages, you have to write a lot of type 
 
 Haskell hits this sweet spot: it's as safe as statically typed languages (or even safer) but often as expressive and concise as dynamically typed ones. That balance is what makes it *stunning*.
 
+#### Conditional operations
+
+You are probably already familiar with conditional statements, such as if and else from other imperative languages ​​such as C or Python, in haskell we also have these statements, the difference is that in haskell the else is mandatory if if is used, let's look at an example:
+
+```haskell
+-- Function to check if a number is positive, negative, or zero
+checkNumber :: Int -> String
+checkNumber n =
+    if n > 0
+        then "Positive"
+        else if n < 0
+            then "Negative"
+            else "Zero"
+
+main :: IO ()
+main = do
+    putStrLn (checkNumber 10)    -- Output: Positive
+    putStrLn (checkNumber (-5))  -- Output: Negative
+    putStrLn (checkNumber 0)     -- Output: Zero
+```
+
+In Haskell, conditional statements like if-then-else are expressions, meaning they always evaluate to a value. This differs from imperative languages where such constructs can be statements that do not necessarily produce a value. The mandatory else ensures that every possible branch of the condition is handled, aligning with Haskell's strong emphasis on total functions and exhaustive pattern matching.
+
+This requirement for completeness is an essential feature of Haskell's functional nature. For instance, without an else branch, Haskell would not know what to return if the if condition evaluates to False. This is why the language enforces explicit handling of all cases in an if-then-else` construct.
+
+Another notable aspect of conditional expressions in Haskell is their laziness. Only the branch corresponding to the evaluated condition is computed. For example:
+
+```haskell
+example :: Bool -> String
+example condition =
+    if condition
+        then "True branch"
+        else "False branch"
+```
+In this case, when condition is True, the "False branch" will not be evaluated. This can be particularly useful for optimizing performance, especially when working with expensive computations or infinite data structures.
+
+Additionally, Haskell programmers often prefer using pattern matching or guards over if-then-else, as these approaches are often more concise and expressive. For example, the earlier checkNumber function could be rewritten using guards:
+
+```haskell
+checkNumber :: Int -> String
+checkNumber n
+    | n > 0     = "Positive"
+    | n < 0     = "Negative"
+    | otherwise = "Zero"
+```

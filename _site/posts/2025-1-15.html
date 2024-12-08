@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>ciccabruno - Haskell notes for noobs</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <div id="image">
+                    <img src="../images/lambda3.png" height="50" width="30">
+                </div>
+                <a href="../">CiccλBruno</a>
+            </div>
+            <div id="navigation">
+                <a href="../">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../archive.html">Archive</a>
+                <a href="https://github.com/BrunoCiccarino">Github</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Haskell notes for noobs</h1>
+
+            <div class="info">
+    Posted on January 15, 2025
+    
+        by Bruno Ciccarino
+    
+</div>
+
+<p>Haskell emerged in the mid-1990s, with the aim of being the first purely functional language. For a long time, Haskell was considered an academic language, and therefore difficult, but it is currently used in several companies (in whole or in part of projects), especially fintechs, which are using a lot of haskell.</p>
+<h3 id="references">References:</h3>
+<ul>
+<li><a href="https://web.archive.org/web/20240820205228/https://yannesposito.com/Scratch/en/blog/Haskell-the-Hard-Way/">Haskell the hard way</a></li>
+<li><a href="https://book.realworldhaskell.org/read/why-functional-programming-why-haskell.html">Real world haskell</a></li>
+<li><a href="https://web.archive.org/web/20240816183510/https://learnyouahaskell.com/">Learn you haskell</a></li>
+<li><a href="https://goalkicker.com/HaskellBook/">Haskell notes for professionals</a></li>
+</ul>
+<h3 id="table-of-contents">Table of contents</h3>
+<ul>
+<li><a href="#references">References:</a></li>
+<li><a href="#table-of-contents">Table of contents</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#contextualizing"><strong>contextualizing</strong></a></li>
+<li><a href="#basics">Basics</a>
+<ul>
+<li><a href="#simple-expressions">Simple expressions</a></li>
+<li><a href="#hello-world">Hello world</a></li>
+<li><a href="#functions-and-high-order-function">Functions and High order function</a></li>
+</ul></li>
+<li><a href="#pure-functions">Pure functions</a></li>
+<li><a href="#primitive-types">Primitive types</a></li>
+<li><a href="#type-inference">Type inference</a></li>
+<li><a href="#what-to-expect-from-type-inference">What to expect from type inference?</a></li>
+<li><a href="#conditional-operations">Conditional operations</a></li>
+</ul>
+<h3 id="introduction">Introduction</h3>
+<p>Before diving into Haskell, you’ll need to set up your development environment. Here’s a quick guide to get started:</p>
+<ol type="1">
+<li><strong>Install GHCup</strong>:<br />
+GHCup is the recommended way to install Haskell tools like GHC (the Glasgow Haskell Compiler) and Cabal (the Haskell build system). Run the following command in your terminal:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>   <span class="ex">curl</span> <span class="at">-sSL</span> https://get-ghcup.haskell.org <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div>
+<p>Follow the on-screen instructions to complete the installation.</p>
+<p>Add GHCup to your PATH:
+If not done automatically, add the following line to your shell configuration file (.bashrc, .zshrc, etc.):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$HOME</span><span class="st">/.ghcup/bin:</span><span class="va">$PATH</span><span class="st">&quot;</span></span></code></pre></div>
+<p>Then reload your shell with source ~/.bashrc or equivalent.</p>
+<p>Install GHC and Cabal:
+Use GHCup to install the latest versions of GHC and Cabal:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ghcup</span> install ghc</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ghcup</span> install cabal</span></code></pre></div>
+<p>Verify the installation with:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ghc</span> <span class="at">--version</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cabal</span> <span class="at">--version</span></span></code></pre></div>
+<p><strong>Install stack</strong>
+The Haskell Stack is a cross-platform program that allows the development of Haskell projects. And to install just type these commands in your terminal (the commands may change depending on your package manager)</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install haskell-stack</span></code></pre></div>
+<p><strong>Set up an IDE or Editor</strong>:
+A good editor makes Haskell development more enjoyable. For a lightweight setup, you can use vim or Neovim with the haskell-language-server. Alternatively, VSCode with the Haskell extension offers a modern IDE experience.</p>
+<p>The first thing we’re going to do is run ghc’s interactive mode and call some function to get a basic idea of ​​haskell. Open your terminal and type ghci . You will be greeted with something like this.</p>
+<pre><code>$ ghci
+GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
+ghci&gt;</code></pre>
+<p>Now, with the stack we downloaded, create a project by typing</p>
+<p>stack new Haskell-notes-for-noobs</p>
+<p>simple then it will create the project with the simple template, preparing our environment so that we can learn Haskell in the best way.</p>
+<p>It will create a structure similar to this</p>
+<pre><code>[03:23 PM]-[charon@DESKTOP-27DNBRN]-[~]- |main U:8 ?:64 ✗|
+$ cd Haskell-notes-for-noobs
+/home/charon/Haskell-notes-for-noobs
+
+[03:23 PM]-[charon@DESKTOP-27DNBRN]-[~/Haskell-notes-for-noobs]- |main U:8 ?:64 ✗|
+$ ls
+CHANGELOG.md  Haskell-notes-for-noobs.cabal  LICENSE  README.md  Setup.hs  app  package.yaml  src  stack.yaml  test</code></pre>
+<p>This is the folder we will use to do everything in this cookbook, for anyone who wants the codes, all the codes, including the answers to the challenges, they will be in this github repository: <a href="https://github.com/BrunoCiccarino/Haskell-notes-for-noobs">haskell-notes-for-noobs</a></p>
+<h3 id="contextualizing"><strong>contextualizing</strong></h3>
+<p>In the era of new languages, in the late 1980s, a team was assembled to develop a purely functional language that would later become haskell, named after mathematician Haskell Brooks Curry.</p>
+<p>Haskell with a very rich architecture, a modern, purely functional and non-strict language, specially designed to handle a wide range of applications, from numerical to symbolic. It has an elegant and expressive syntax.</p>
+<p>Haskell is specially designed to handle large-scale industrial production applications. It is known for its rich built architecture. Haskell programs are written as mathematical functions. Everything can be done in Haskell, this blog was created in Haskell using the <a href="https://jaspervdj.be/hakyll/">hakyll</a> static page generator, and don’t be scared, it’s actually easier than it looks.</p>
+<h3 id="basics">Basics</h3>
+<p>If you’re the kind of horrible person who doesn’t read the intros to things and skipped, you might be interested in coming back, as I taught you how to prepare your haskell development environment. In haskell everything is done with function calls, hence the name functional statically, implicitly typed (the types are checked by the compiler, but you don’t need to declare them), lazy (nothing is done until it needs to be done). Its closest popular relative is probably the ML family of languages ​​(which are not, however, lazy languages).</p>
+<blockquote>
+<p>Note: Laziness by default is a very unusual language design. By default, Haskell evaluates something only when it is necessary. As a result, it provides a very elegant way of manipulating infinite structures, for example.</p>
+</blockquote>
+<p>Okay, now we can make some basic expressions in Haskell so you can get the hang of it.</p>
+<h4 id="simple-expressions">Simple expressions</h4>
+<p>You can type most math expressions directly into ghci and get an answer.</p>
+<pre><code>$ ghci
+GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
+ghci&gt;  3 * 5
+15
+ghci&gt; 4 ^ 2 - 1
+15
+ghci&gt; (1 - 5)^(3 * 2 - 4)
+16
+ghci&gt;</code></pre>
+<p>For strings, it must be enclosed in “double quotes”. And to concatenate them use the ++ operator.</p>
+<pre><code>ghci&gt; &quot;Hi dear&quot;
+&quot;Hi dear&quot;
+ghci&gt; &quot;Hello&quot; ++ &quot;World&quot;
+&quot;HelloWorld&quot;</code></pre>
+<p>To call functions, simply place the arguments directly after the function. There are no parentheses as part of the function call:</p>
+<pre><code>ghci&gt; gcd 21 14
+7
+ghci&gt; round 6.59
+7
+ghci&gt; not (5 &lt; 3)
+True
+ghci&gt; truncate 6.59
+6
+ghci&gt; sqrt 2
+1.4142135623730951</code></pre>
+<p><strong>Challenge</strong>
+- In the Haskell repl (read eval print loop) determine the value of each of the powers below.</p>
+<ul>
+<li><ol type="a">
+<li>25^1</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>150^0</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>(7/9)^-2</li>
+</ol></li>
+</ul>
+<h4 id="hello-world">Hello world</h4>
+<p>I/O can be used to read and write to the console, to print something on the screen we use putStrLn, putStr or print as in the example below.</p>
+<pre><code>ghci&gt; putStrLn &quot;Hello, dear&quot;
+Hello, dear
+ghci&gt; putStr &quot;no line break&quot;
+no line breakghci&gt; print (10 + 10)
+20
+ghci&gt; print ( 1 &gt; 2)
+False</code></pre>
+<p>Reading can be done with getLine (which returns a String) or readLn (which returns any type of value you want). The&lt;-O symbol is used to assign a name to the result of an I/O action.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> <span class="st">&quot;What is your name?&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    name <span class="ot">&lt;-</span> <span class="fu">getLine</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> (<span class="st">&quot;Hello &quot;</span> <span class="op">++</span> name <span class="op">++</span> <span class="st">&quot;!&quot;</span>)</span></code></pre></div>
+<p><strong>Chalenge</strong>
+- modify this code to ask how old you are</p>
+<h4 id="functions-and-high-order-function">Functions and High order function</h4>
+<p>To apply a function in Haskell, we write the function name followed by its arguments. We do not use parentheses or commas to group or separate a function’s arguments; just write the name of the function, followed by each argument in turn. As an example, let’s apply the compare function, which takes two arguments.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ghci<span class="op">&gt;</span> <span class="fu">compare</span> <span class="dv">2</span> <span class="dv">3</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">LT</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>ghci<span class="op">&gt;</span> <span class="fu">compare</span> <span class="dv">3</span> <span class="dv">3</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">EQ</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>ghci<span class="op">&gt;</span> <span class="fu">compare</span> <span class="dv">3</span> <span class="dv">2</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="dt">GT</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>ghci<span class="op">&gt;</span></span></code></pre></div>
+<p>In haskell functions can receive functions as parameters, allowing the creation of generic functions, composing two or more functions and defining specific domain languages. Higher-order functions are not just a part of the Haskell experience, they are practically the Haskell experience. It turns out that if you want to define computations by defining what things are rather than defining steps that change some state and perhaps looping them, higher order functions are indispensable. They are a really powerful way of solving problems and thinking about programs.</p>
+<p>Officially, each function in Haskell only accepts one parameter. So how is it possible that we have defined and used multiple functions that accept more than one parameter so far? Well, it’s a clever trick! All functions that accepted multiple parameters so far have been curried functions. What does this mean? You will understand better with an example. Let’s take our good friend, the max function. It appears that it accepts two parameters and returns the larger one. Doing max 7 8 first creates a function that accepts a parameter and returns 7 or that parameter, depending on which is greater. Then 8 is applied to that function and that function produces the desired result. It sounds like a mouthful, but it’s actually a really cool concept. The following two calls are equivalent:</p>
+<pre><code>ghci&gt; max 7 8
+8
+ghci&gt; (max 7) 8
+8</code></pre>
+<p>Putting a space between two things is simply function application. Space is like an operator and has the highest precedence. Let’s look at the type of max. It’s max :: (Ord a) =&gt; a -&gt; a -&gt; a. This can also be written as max :: (Ord a) =&gt; a -&gt; (a -&gt; a). This can be read as: max takes an a and returns (this is the -&gt;) a function that takes an a and returns an a. This is why the return type and function parameters are all simply separated with arrows.</p>
+<blockquote>
+<p>Note: The operator =&gt; in Haskell: This operator separates the constraints (on type variables) from the rest of the type signature. For instance, in max :: (Ord a) =&gt; a -&gt; a -&gt; a, the Ord a constraint indicates that the type a must belong to the Ord type class, which means it supports ordering operations like &lt;, &gt;, and compare. The part after the =&gt; describes the actual function signature.</p>
+</blockquote>
+<p>So how is this beneficial for us? Simply put, if we call a function with few parameters, we get back a partially applied function, that is, a function that takes in as many parameters as we left out. Using partial application (calling functions with few parameters, if you prefer) is a cool way to create functions on the fly so we can pass them to another function or seed them with some data.</p>
+<p>Take a look at this offensively simple function:</p>
+<pre><code>addThree :: Int -&gt; Int -&gt; Int -&gt; Int
+addThree x y z = x + y + z</code></pre>
+<p><strong>Output</strong>:</p>
+<pre><code>ghci&gt; :l addThree.hs
+[1 of 2] Compiling Main             ( addThree.hs, interpreted )
+Ok, one module loaded.
+ghci&gt; addTwoMore = addThree 5
+ghci&gt; result = addTwoMore 10 15
+ghci&gt; print(result)
+30</code></pre>
+<h3 id="pure-functions">Pure functions</h3>
+<p>In haskell we have a concept of “pure functions”, and then you tell me, what are pure functions? And I answer:</p>
+<p>For a function to be pure, it has to satisfy two requirements</p>
+<ul>
+<li>It always returns the same result for the same arguments.</li>
+<li>It cannot have side effects</li>
+</ul>
+<p>But what does this mean?</p>
+<p>Side effects are things like printing to the screen, reading/writing files, or communicating with other computers on the Internet are examples of side effects. In other words, most interactions with the outside world — almost everything that makes computers useful! — involves side effects.</p>
+<p>Haskell encourages the use of pure functions, as they are easier to reason about than non-pure functions. In fact, pure functions in Haskell are very similar to functions used in mathematics. Mathematical functions are pure: they have no side effects and no states.</p>
+<p>But there’s a big problem with pure functions: they don’t allow for certain vital and useful functions. For example, a function that opens a file on disk cannot be pure because its results will depend on whether the file exists or not. A function that returns input from a use is also not pure because it may return different results every time it is called (i.e., the user may type different input).</p>
+<h3 id="primitive-types">Primitive types</h3>
+<p>In Haskell, types are how you describe the data your program will work with. Primitive types are types that are a collection of values ​​related to each other, for example: Int comprises the values ​​of integers, Bool contains only the values ​​True and False, etc… In haskell we use the following notation to define types: value :: type. Below are some examples of the types:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span><span class="ot"> ::</span> <span class="dt">Bool</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span><span class="ot"> ::</span> <span class="dt">Bool</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span><span class="ot"> ::</span> <span class="dt">Int</span></span></code></pre></div>
+<blockquote>
+<p>Note: In haskell it is important to remember that types always start with a capital letter</p>
+</blockquote>
+<p><strong>Some of these types are</strong>:</p>
+<ul>
+<li>Bool: Contains True and False values. Boolean expressions can be executed with the operators &amp;&amp; (and), || (or) and not</li>
+<li>Char: Contains all characters in the Unicode system.</li>
+<li>String: sequences of characters delimited by double quotes.</li>
+<li>Int: Integers with fixed precision in 64 bits. Represents values ​​from -2^63 to 2^63 - 1.</li>
+<li>Integer: Integers of arbitrary precision. Represents integer values ​​of any precision memory is the limit. Slower than Int operations.</li>
+<li>Float: floating point values ​​with single precision. Allows you to represent numbers with a total of 7 digits, on average.</li>
+<li>Double: double precision floating point values ​​that allow representing a total of 16 digits on average</li>
+</ul>
+<p><strong>lists</strong></p>
+<p>Lists are sequences of elements of the same type grouped by square brackets and separated by commas. We can make lists of any type, for example:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>[<span class="ch">'1'</span>, <span class="ch">'a'</span>, <span class="ch">'s'</span>, <span class="ch">'o'</span>, <span class="ch">'A'</span>]</span></code></pre></div>
+<blockquote>
+<p>Note: that the last list is a list of strings, as all elements are enclosed in single quotes</p>
+</blockquote>
+<p>We can also have lists of lists, For example:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>[[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>] [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]]<span class="ot"> ::</span> [[<span class="dt">Int</span>]]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>[[<span class="ch">'h'</span>, <span class="ch">'e'</span>, <span class="ch">'l'</span>, <span class="ch">'l'</span>, <span class="ch">'o'</span>] [<span class="ch">'w'</span>, <span class="ch">'o'</span>, <span class="ch">'r'</span>, <span class="ch">'l'</span>, <span class="ch">'d'</span>]]<span class="ot"> ::</span> [[<span class="dt">Char</span>]]</span></code></pre></div>
+<ul>
+<li>The list type does not specify its size</li>
+<li>There are no limitations regarding the type of list</li>
+<li>There are no limitations on the size of the list</li>
+</ul>
+<p><strong>tuples</strong></p>
+<p>Tuples are finite sequences of components containing zero or more different types:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(<span class="dt">True</span>, <span class="dt">False</span>)<span class="ot"> ::</span> (<span class="dt">Bool</span>, <span class="dt">Bool</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>(<span class="fl">1.0</span>, <span class="st">&quot;Yes&quot;</span>, <span class="dt">False</span>)<span class="ot"> ::</span> (<span class="dt">Double</span>, <span class="dt">String</span>, <span class="dt">Bool</span>)</span></code></pre></div>
+<p>We can also have lists of tuples:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>[(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ch">'a'</span>, <span class="dt">False</span>)]<span class="ot"> ::</span> [(<span class="dt">Int</span>, <span class="dt">Int</span>, <span class="dt">Char</span>, <span class="dt">Bool</span>)]</span></code></pre></div>
+<blockquote>
+<p>Note: It is important to remember that in haskell lists and tuples are immutable, unlike most languages, in haskell all types are immutable.
+Note: If you’ve ever studied Python, you’re probably used to lists and tuples being almost interchangeable (or using them in the same way). Although the elements of a Python tuple are immutable, it can be indexed and iterated using the same methods as a list. This is not the case in Haskell, so don’t try to take this idea with you into unfamiliar linguistic territory.</p>
+</blockquote>
+<ul>
+<li>The type of the tuple specifies its size</li>
+<li>There are no limitations on the types associated with the tuple (we can have tuples of tuples)</li>
+<li>Tuples must have a finite size</li>
+<li>Arity 1 tuples are not allowed to maintain compatibility with the use of parentheses as an evaluation order.</li>
+</ul>
+<p>For example, if we went to ghci and tried to define a tuple <code>fst</code> with a single value (42), what do you think would happen?</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">GHCi</span>, version <span class="fl">9.4</span><span class="op">.</span><span class="dv">7</span><span class="op">:</span> https<span class="op">://</span>www<span class="op">.</span>haskell<span class="op">.</span>org<span class="op">/</span>ghc<span class="op">/</span>  <span class="op">:?</span> for help</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ghci<span class="op">&gt;</span> <span class="fu">fst</span> (<span class="dv">42</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">1</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">Could</span> <span class="fu">not</span> deduce (<span class="dt">Num</span> (a, b0))</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>      from the context<span class="op">:</span> <span class="dt">Num</span> (a, b)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        bound by the inferred <span class="kw">type</span> for ‘it’<span class="op">:</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                   <span class="kw">forall</span> {a} {b}<span class="op">.</span> <span class="dt">Num</span> (a, b) <span class="ot">=&gt;</span> a</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        at <span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">1</span><span class="op">:</span><span class="dv">1</span><span class="op">-</span><span class="dv">8</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">The</span> <span class="kw">type</span> variable ‘b0’ is ambiguous</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">In</span> the ambiguity check for the inferred <span class="kw">type</span> for ‘it’</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">To</span> defer the ambiguity check to use sites, enable <span class="dt">AllowAmbiguousTypes</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">When</span> checking the inferred <span class="kw">type</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="ot">        it ::</span> <span class="kw">forall</span> {a} {b}<span class="op">.</span> <span class="dt">Num</span> (a, b) <span class="ot">=&gt;</span> a</span></code></pre></div>
+<p>On the other hand, we can have tuples of zero arity, that is, a tuple that contains zero elements within it. When a tuple has zero arity, it is called a unit, throughout this cookbook we will see more about!</p>
+<h3 id="type-inference">Type inference</h3>
+<p>Finally! Let’s talk about this subject that makes our lives so much easier, type inference, let the compiler detect for you the type that is being used, this is called type inference!!</p>
+<p>Haskell uses the Hindley Milner type inference system, but I will explain this better in the future.</p>
+<h3 id="what-to-expect-from-type-inference">What to expect from type inference?</h3>
+<p>While strong, static typing makes Haskell safe, type inference makes it essential. The result is stunning: we end up with a language that is safer than popular statically typed languages ​​and often more expressive than dynamically typed languages.</p>
+<p>Wait, what do you mean by “type inference makes it essential”? How is it stunning?</p>
+<p>Great question! Here’s the deal: Haskell uses something called <em>type inference</em>. This means you don’t always have to explicitly declare the type of every variable or function. The compiler is smart enough to figure it out on its own in many cases, even logical errors it points out in your code.</p>
+<p>Now, combine that with <em>strong, static typing</em>. This ensures your code is super safe because the types are checked at compile time, so a lot of potential errors are caught before your program even runs.</p>
+<p>Okay, so what makes this better than other languages?</p>
+<p>Good point. In many statically typed languages, you have to write a lot of type annotations, which can feel repetitive or cumbersome. On the other hand, dynamically typed languages are expressive but might not catch type-related errors until runtime.</p>
+<p>Haskell hits this sweet spot: it’s as safe as statically typed languages (or even safer) but often as expressive and concise as dynamically typed ones. That balance is what makes it <em>stunning</em>.</p>
+<h3 id="conditional-operations">Conditional operations</h3>
+<p>You are probably already familiar with conditional statements, such as if and else from other imperative languages ​​such as C or Python, in haskell we also have these statements, the difference is that in haskell the else is mandatory if if is used, let’s look at an example:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Function to check if a number is positive, negative, or zero</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ot">checkNumber ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>checkNumber n <span class="ot">=</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> n <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">then</span> <span class="st">&quot;Positive&quot;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> <span class="kw">if</span> n <span class="op">&lt;</span> <span class="dv">0</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>            <span class="kw">then</span> <span class="st">&quot;Negative&quot;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>            <span class="kw">else</span> <span class="st">&quot;Zero&quot;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">putStrLn</span> (checkNumber <span class="dv">10</span>)    <span class="co">-- Output: Positive</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">putStrLn</span> (checkNumber (<span class="op">-</span><span class="dv">5</span>))  <span class="co">-- Output: Negative</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">putStrLn</span> (checkNumber <span class="dv">0</span>)     <span class="co">-- Output: Zero</span></span></code></pre></div>
+<p>In Haskell, conditional statements like if-then-else are expressions, meaning they always evaluate to a value. This differs from imperative languages where such constructs can be statements that do not necessarily produce a value. The mandatory else ensures that every possible branch of the condition is handled, aligning with Haskell’s strong emphasis on total functions and exhaustive pattern matching.</p>
+<p>This requirement for completeness is an essential feature of Haskell’s functional nature. For instance, without an else branch, Haskell would not know what to return if the if condition evaluates to False. This is why the language enforces explicit handling of all cases in an if-then-else` construct.</p>
+<p>Another notable aspect of conditional expressions in Haskell is their laziness. Only the branch corresponding to the evaluated condition is computed. For example:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ot">example ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>example condition <span class="ot">=</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> condition</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">then</span> <span class="st">&quot;True branch&quot;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> <span class="st">&quot;False branch&quot;</span></span></code></pre></div>
+<p>In this case, when condition is True, the “False branch” will not be evaluated. This can be particularly useful for optimizing performance, especially when working with expensive computations or infinite data structures.</p>
+<p>Additionally, Haskell programmers often prefer using pattern matching or guards over if-then-else, as these approaches are often more concise and expressive. For example, the earlier checkNumber function could be rewritten using guards:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ot">checkNumber ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>checkNumber n</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">&gt;</span> <span class="dv">0</span>     <span class="ot">=</span> <span class="st">&quot;Positive&quot;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">&lt;</span> <span class="dv">0</span>     <span class="ot">=</span> <span class="st">&quot;Negative&quot;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="st">&quot;Zero&quot;</span></span></code></pre></div>
+
+        </div>
+    </body>
+</html>

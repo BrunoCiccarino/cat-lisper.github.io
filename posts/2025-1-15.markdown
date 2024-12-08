@@ -26,9 +26,13 @@ Haskell emerged in the mid-1990s, with the aim of being the first purely functio
   - [Functions and High order function](#functions-and-high-order-function)
   - [Pure functions](#pure-functions)
   - [Primitive types](#primitive-types)
+  - [lists](#lists)
+  - [tuples](#tuples)
+  - [Operations with tuples](#operations-with-tuples)
   - [Type inference](#type-inference)
   - [What to expect from type inference?](#what-to-expect-from-type-inference)
   - [Conditional operations](#conditional-operations)
+  - [Type creation](#type-creation)
 
 ### Introduction
 
@@ -260,6 +264,10 @@ Haskell encourages the use of pure functions, as they are easier to reason about
 
 But there's a big problem with pure functions: they don't allow for certain vital and useful functions. For example, a function that opens a file on disk cannot be pure because its results will depend on whether the file exists or not. A function that returns input from a use is also not pure because it may return different results every time it is called (i.e., the user may type different input).
 
+**Challenge**
+
+- Pure functions are an essential concept in Haskell. A pure function always returns the same output for the same input and has no side effects. Your task is to create a pure function that calculates the area of a rectangle and a circle, given their dimensions.
+
 #### Primitive types
 
 In Haskell, types are how you describe the data your program will work with. Primitive types are types that are a collection of values ​​related to each other, for example: Int comprises the values ​​of integers, Bool contains only the values ​​True and False, etc... In haskell we use the following notation to define types: value :: type. Below are some examples of the types:
@@ -282,7 +290,7 @@ True :: Bool
 - Float: floating point values ​​with single precision. Allows you to represent numbers with a total of 7 digits, on average.
 - Double: double precision floating point values ​​that allow representing a total of 16 digits on average
 
-**lists**
+#### lists
 
 Lists are sequences of elements of the same type grouped by square brackets and separated by commas. We can make lists of any type, for example:
 
@@ -304,7 +312,7 @@ We can also have lists of lists, For example:
 - There are no limitations regarding the type of list
 - There are no limitations on the size of the list
 
-**tuples** 
+#### tuples 
 
 Tuples are finite sequences of components containing zero or more different types: 
 
@@ -347,6 +355,52 @@ ghci> fst (42)
 ```
 
 On the other hand, we can have tuples of zero arity, that is, a tuple that contains zero elements within it. When a tuple has zero arity, it is called a unit, throughout this cookbook we will see more about!
+
+#### Operations with tuples
+
+Let's make a simple function that takes two tuples and returns their sum, a+c, b+d
+
+**example**
+
+```haskell
+func :: (Int, Int) -> (Int, Int) -> (Int, Int)
+func (a, b) (c, d) = (a+c, b+d)
+```
+
+**Output**
+
+```
+ghci> :l main.hs
+[1 of 2] Compiling Main (main.hs, interpreted)
+Okay, one module loaded.
+ghci> func (2,3) (4,5)
+(6.8)
+```
+
+What happened there? 
+
+Well, first we create the func function, which is of the integer tuple type that returns an integer, then we call the function recursively, performing a sum operation between their values. 
+
+**Challenge**
+
+- Modify this code so that it returns the multiplication of values ​​within the tuples
+
+Well, now let's do another operation with tuples, let's do a simple function that receives a tuple of strings and returns the elements of each position.
+
+```haskell
+func::(String, String, String)
+func = ("Bruno", "Jorge", "Matheus")
+
+func_prim (x, _, _) = x
+func_sec (_, y, _) = y
+func_ter (_, _, z) = z
+```
+
+And what is happening there? 
+
+Well, first we define the function, which is of the tuple type that receives 3 strings, then we define the names, and we create 3 other auxiliary functions that are responsible for printing each name in the tuple.
+
+And what does this underscore (_) mean? It tells the compiler to ignore the index in the position where the underscore is.
 
 #### Type inference
 
@@ -414,4 +468,41 @@ checkNumber n
     | n > 0     = "Positive"
     | n < 0     = "Negative"
     | otherwise = "Zero"
+```
+
+What is happening there? 
+
+Well, there's another way to represent conditional operations, the statement | is equivalent to the well-known if, and the otherwise statement is equivalent to the well-known else.
+
+#### Type creation
+
+As with most modern programming languages, haskell can also create your custom types. And how does this work? 
+
+In C we create the type by calling a function, typedef, in haskell we have the type function.
+
+And how do we use this type function?
+
+First we define the identifier and the type equivalent to the identifier, for example:
+
+```haskell
+type Name = String
+type Age = Int
+type MainLanguage = String
+
+type Person = (Name, Age, MainLanguage)
+
+myperson :: Person
+myperson = ("Bruno", 22, "Haskell")
+```
+
+In this code we first define the type Name, which is a String, then the Age which is an integer and then the MainLanguage which is also a string. And then we create the function myperson which is of type person. And in the myperson function, we define the tuple that contains the Name, Age and MainLanguage types. When we run the code the output is this:
+
+```
+GHCi, version 9.4.7: https://www.haskell.org/ghc/ :? for help
+ghci> :l main.hs
+[1 of 2] Compiling Main (main.hs, interpreted)
+Okay, one module loaded.
+ghci> myperson
+("Bruno",22,"Haskell")
+ghci> 
 ```

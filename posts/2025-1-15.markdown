@@ -300,6 +300,8 @@ True :: Bool
 
 #### lists
 
+![list](../images/list.png)
+
 Lists are sequences of elements of the same type grouped by square brackets and separated by commas. We can make lists of any type, for example:
 
 ```haskell

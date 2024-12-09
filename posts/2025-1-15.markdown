@@ -22,13 +22,19 @@ Haskell emerged in the mid-1990s, with the aim of being the first purely functio
 - [**contextualizing**](#contextualizing)
 - [Basics](#basics)
   - [Simple expressions](#simple-expressions)
+    - [Challenge](#challenge)
   - [Hello world](#hello-world)
+    - [Challenge](#challenge-1)
   - [Functions and High order function](#functions-and-high-order-function)
   - [Pure functions](#pure-functions)
+    - [Challenge](#challenge-2)
   - [Primitive types](#primitive-types)
   - [lists](#lists)
+  - [List operations](#list-operations)
+    - [Challenge](#challenge-3)
   - [tuples](#tuples)
   - [Operations with tuples](#operations-with-tuples)
+    - [Challenge](#challenge-4)
   - [Type inference](#type-inference)
   - [What to expect from type inference?](#what-to-expect-from-type-inference)
   - [Conditional operations](#conditional-operations)
@@ -164,7 +170,7 @@ ghci> sqrt 2
 1.4142135623730951
 ```
 
-**Challenge**
+##### Challenge
 - In the Haskell repl (read eval print loop) determine the value of each of the powers below.
 
 - a. 25^1
@@ -196,7 +202,7 @@ main = do
     print ("Hello " ++ name ++ "!")
 ```
 
-**Chalenge**
+##### Challenge
 - modify this code to ask how old you are
 
 #### Functions and High order function
@@ -266,7 +272,7 @@ Haskell encourages the use of pure functions, as they are easier to reason about
 
 But there's a big problem with pure functions: they don't allow for certain vital and useful functions. For example, a function that opens a file on disk cannot be pure because its results will depend on whether the file exists or not. A function that returns input from a use is also not pure because it may return different results every time it is called (i.e., the user may type different input).
 
-**Challenge**
+##### Challenge
 
 - Pure functions are an essential concept in Haskell. A pure function always returns the same output for the same input and has no side effects. Your task is to create a pure function that calculates the area of a rectangle and a circle, given their dimensions.
 
@@ -313,6 +319,68 @@ We can also have lists of lists, For example:
 - The list type does not specify its size
 - There are no limitations regarding the type of list
 - There are no limitations on the size of the list
+
+A good example of a list is a string, which is nothing more than a list of characters. For example, the name Bruno is represented like this ["B", "r", "u", "n", "o"].
+
+#### List operations
+
+Haskell lists are separated into two segments, the head and the body, which is called the tail, these are native functions in prelude, the haskell standard library.
+
+The head always represents the first element in the list, as in the example below:
+
+```haskell
+ghci> head [1, 2, 3]
+1
+```
+
+The tail represents the rest of the elements in the list, as shown in the example below:
+
+```haskell
+ghci> tail [1, 2, 3]
+[2,3]
+```
+
+In haskell we have the symbol (:) which is the list construction operator. Every list is constructed through this operator. We can check that this operator is polymorphic, using the type command:
+
+```haskell
+ghci> :type (:)
+(:) :: a -> [a] -> [a]
+```
+
+With this operator we can also build a list, as in the example below:
+
+```haskell
+ghci> 1:2:3:[]
+[1,2,3]
+```
+
+##### Challenge
+
+make a function that passes a list and returns the length of the list (the number of elements in the list)
+
+**Input example**: 
+
+```
+sizeof ["a", "b", "c", "d"]
+```
+
+**Output example**: 
+
+```
+4
+```
+
+**Input example**: 
+
+```
+sizeof [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+```
+
+**Output example**:
+
+```
+10
+```
 
 #### tuples 
 
@@ -383,7 +451,7 @@ What happened there?
 
 Well, first we create the func function, which is of the integer tuple type that returns an integer, then we call the function recursively, performing a sum operation between their values. 
 
-**Challenge**
+##### Challenge
 
 - Modify this code so that it returns the multiplication of values ​​within the tuples
 
@@ -508,3 +576,4 @@ ghci> myperson
 ("Bruno",22,"Haskell")
 ghci> 
 ```
+

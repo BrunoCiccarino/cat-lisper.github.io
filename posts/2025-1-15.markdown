@@ -328,6 +328,8 @@ A good example of a list is a string, which is nothing more than a list of chara
 
 Haskell lists are separated into two segments, the head and the body, which is called the tail, these are native functions in prelude, the haskell standard library.
 
+![monster list](../images/listmonster.png)
+
 The head always represents the first element in the list, as in the example below:
 
 ```haskell

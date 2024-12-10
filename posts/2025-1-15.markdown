@@ -1,9 +1,11 @@
 ---
 title: Haskell notes for noobs
 author: Bruno Ciccarino
-tags: haskell, learning, functional-programming, fp, miranda
+tags: haskell, learning, functional-programming, fp, miranda, learn-you-haskell, haskell-the-hard-way
 date: "2025-01-15T00:00:00Z" 
 ---
+
+If you've tried learning haskell before but haven't gotten very far, this book might be for you. Many people take to haskell like ducks to water. Some people don't, however, and I think this is usually because of the way the material is presented - there is nothing difficult about learning haskell. In this book, I try to explain things a little differently than they are normally explained, to avoid the problems that some people have when learning from most books out there. The concreteness of the explanations here can help overcome unfamiliarity with the language. haskell is really just a normal programming language, but one with powerful features that can also be used in special ways.
 
 Haskell emerged in the mid-1990s, with the aim of being the first purely functional language. For a long time, Haskell was considered an academic language, and therefore difficult, but it is currently used in several companies (in whole or in part of projects), especially fintechs, which are using a lot of haskell.
 
@@ -32,6 +34,7 @@ Haskell emerged in the mid-1990s, with the aim of being the first purely functio
   - [lists](#lists)
   - [List operations](#list-operations)
     - [Challenge](#challenge-3)
+  - [List comprehension](#list-comprehension)
   - [tuples](#tuples)
   - [Operations with tuples](#operations-with-tuples)
     - [Challenge](#challenge-4)
@@ -123,6 +126,8 @@ Haskell with a very rich architecture, a modern, purely functional and non-stric
 Haskell is specially designed to handle large-scale industrial production applications. It is known for its rich built architecture. Haskell programs are written as mathematical functions. Everything can be done in Haskell, this blog was created in Haskell using the [hakyll](https://jaspervdj.be/hakyll/) static page generator, and don't be scared, it's actually easier than it looks.
 
 ### Basics
+
+![](../images/cowboy.png)
 
 If you're the kind of horrible person who doesn't read the intros to things and skipped, you might be interested in coming back, as I taught you how to prepare your haskell development environment. In haskell everything is done with function calls, hence the name functional statically, implicitly typed (the types are checked by the compiler, but you don't need to declare them), lazy (nothing is done until it needs to be done). Its closest popular relative is probably the ML family of languages ​​(which are not, however, lazy languages). 
 
@@ -300,7 +305,7 @@ True :: Bool
 
 #### lists
 
-![list](../images/list.png)
+![](../images/list.png)
 
 Lists are sequences of elements of the same type grouped by square brackets and separated by commas. We can make lists of any type, for example:
 
@@ -328,7 +333,7 @@ A good example of a list is a string, which is nothing more than a list of chara
 
 Haskell lists are separated into two segments, the head and the body, which is called the tail, these are native functions in prelude, the haskell standard library.
 
-![monster list](../images/listmonster.png)
+![](../images/listmonster.png)
 
 The head always represents the first element in the list, as in the example below:
 
@@ -385,6 +390,10 @@ sizeof [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
 10
 ```
+
+#### List comprehension
+
+...
 
 #### tuples 
 

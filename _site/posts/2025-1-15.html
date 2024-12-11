@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>ciccabruno - Haskell notes for noobs</title>
+        <title>stupid-lisper - Haskell notes for noobs</title>
         <link rel="stylesheet" type="text/css" href="../css/default.css" />
     </head>
     <body>
@@ -12,14 +12,13 @@
                 <div id="image">
                     <img src="../images/lambda3.png" height="50" width="30">
                 </div>
-                <a href="../">CiccλBruno</a>
+                <a href="../">Stupid-Lisper</a>
             </div>
             <div id="navigation">
                 <a href="../">Home</a>
                 <a href="../about.html">About</a>
                 <a href="../contact.html">Contact</a>
                 <a href="../archive.html">Archive</a>
-                <a href="https://github.com/BrunoCiccarino">Github</a>
             </div>
         </div>
 
@@ -33,6 +32,7 @@
     
 </div>
 
+<p>If you’ve tried learning haskell before but haven’t gotten very far, this book might be for you. Many people take to haskell like ducks to water. Some people don’t, however, and I think this is usually because of the way the material is presented - there is nothing difficult about learning haskell. In this book, I try to explain things a little differently than they are normally explained, to avoid the problems that some people have when learning from most books out there. The concreteness of the explanations here can help overcome unfamiliarity with the language. haskell is really just a normal programming language, but one with powerful features that can also be used in special ways.</p>
 <p>Haskell emerged in the mid-1990s, with the aim of being the first purely functional language. For a long time, Haskell was considered an academic language, and therefore difficult, but it is currently used in several companies (in whole or in part of projects), especially fintechs, which are using a lot of haskell.</p>
 <h3 id="references">References:</h3>
 <ul>
@@ -67,6 +67,10 @@
 <li><a href="#list-operations">List operations</a>
 <ul>
 <li><a href="#challenge-3">Challenge</a></li>
+</ul></li>
+<li><a href="#list-comprehension">List comprehension</a>
+<ul>
+<li><a href="#syntax">Syntax</a></li>
 </ul></li>
 <li><a href="#tuples">tuples</a></li>
 <li><a href="#operations-with-tuples">Operations with tuples</a>
@@ -124,10 +128,7 @@ CHANGELOG.md  Haskell-notes-for-noobs.cabal  LICENSE  README.md  Setup.hs  app  
 <p>Haskell with a very rich architecture, a modern, purely functional and non-strict language, specially designed to handle a wide range of applications, from numerical to symbolic. It has an elegant and expressive syntax.</p>
 <p>Haskell is specially designed to handle large-scale industrial production applications. It is known for its rich built architecture. Haskell programs are written as mathematical functions. Everything can be done in Haskell, this blog was created in Haskell using the <a href="https://jaspervdj.be/hakyll/">hakyll</a> static page generator, and don’t be scared, it’s actually easier than it looks.</p>
 <h3 id="basics">Basics</h3>
-<figure>
-<img src="../images/cowboy.png" alt="cowboy" />
-<figcaption aria-hidden="true">cowboy</figcaption>
-</figure>
+<p><img src="../images/cowboy.png" /></p>
 <p>If you’re the kind of horrible person who doesn’t read the intros to things and skipped, you might be interested in coming back, as I taught you how to prepare your haskell development environment. In haskell everything is done with function calls, hence the name functional statically, implicitly typed (the types are checked by the compiler, but you don’t need to declare them), lazy (nothing is done until it needs to be done). Its closest popular relative is probably the ML family of languages ​​(which are not, however, lazy languages).</p>
 <blockquote>
 <p>Note: Laziness by default is a very unusual language design. By default, Haskell evaluates something only when it is necessary. As a result, it provides a very elegant way of manipulating infinite structures, for example.</p>
@@ -259,10 +260,7 @@ ghci&gt; print(result)
 <li>Double: double precision floating point values ​​that allow representing a total of 16 digits on average</li>
 </ul>
 <h4 id="lists">lists</h4>
-<figure>
-<img src="../images/list.png" alt="list" />
-<figcaption aria-hidden="true">list</figcaption>
-</figure>
+<p><img src="../images/list.png" /></p>
 <p>Lists are sequences of elements of the same type grouped by square brackets and separated by commas. We can make lists of any type, for example:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>]</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>[<span class="ch">'1'</span>, <span class="ch">'a'</span>, <span class="ch">'s'</span>, <span class="ch">'o'</span>, <span class="ch">'A'</span>]</span></code></pre></div>
@@ -280,10 +278,7 @@ ghci&gt; print(result)
 <p>A good example of a list is a string, which is nothing more than a list of characters. For example, the name Bruno is represented like this [“B”, “r”, “u”, “n”, “o”].</p>
 <h4 id="list-operations">List operations</h4>
 <p>Haskell lists are separated into two segments, the head and the body, which is called the tail, these are native functions in prelude, the haskell standard library.</p>
-<figure>
-<img src="../images/listmonster.png" alt="monster list" />
-<figcaption aria-hidden="true">monster list</figcaption>
-</figure>
+<p><img src="../images/listmonster.png" /></p>
 <p>The head always represents the first element in the list, as in the example below:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ghci<span class="op">&gt;</span> <span class="fu">head</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span></code></pre></div>
@@ -306,6 +301,19 @@ ghci&gt; print(result)
 <pre><code>sizeof [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre>
 <p><strong>Output example</strong>:</p>
 <pre><code>10</code></pre>
+<h4 id="list-comprehension">List comprehension</h4>
+<p><img src="../images/startingout.png" /></p>
+<p>In haskell there is a notation called list comprehension which is mainly used to create a new list from the existing one. If you come from other languages ​​like C/C++ or Java, you are used to seeing lists as vectors, but in haskell it is different, lists in haskell, just like in mathematics, are a set. Set is a fundamental concept in all branches of Mathematics. When we need to classify objects according to given criterion, we are forming a collection, that is, a set. In mathematics, the objects in a set can be numbers, people, letters, etc.</p>
+<h5 id="syntax">Syntax</h5>
+<p>Now that we know that you can use list comprehension to create a new list from one, let’s look at the syntax for using list comprehension</p>
+<p><code>[any_function variable_name | to bind &lt;- your list]</code></p>
+<blockquote>
+<p>Note that we use the pipe operator ‘|’ to prepare a comprehension list. Its syntax is a little complicated to understand, but we will give more examples to increase your understanding</p>
+</blockquote>
+<ul>
+<li><strong>Example</strong></li>
+</ul>
+<p><code>[toUpper x | x &lt;- ["hello world"]</code></p>
 <h4 id="tuples">tuples</h4>
 <p>Tuples are finite sequences of components containing zero or more different types:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(<span class="dt">True</span>, <span class="dt">False</span>)<span class="ot"> ::</span> (<span class="dt">Bool</span>, <span class="dt">Bool</span>)</span>

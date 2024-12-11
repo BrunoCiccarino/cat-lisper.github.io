@@ -35,6 +35,7 @@ Haskell emerged in the mid-1990s, with the aim of being the first purely functio
   - [List operations](#list-operations)
     - [Challenge](#challenge-3)
   - [List comprehension](#list-comprehension)
+    - [Syntax](#syntax)
   - [tuples](#tuples)
   - [Operations with tuples](#operations-with-tuples)
     - [Challenge](#challenge-4)
@@ -395,6 +396,21 @@ sizeof [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 ![](../images/startingout.png)
 
+In haskell there is a notation called list comprehension which is mainly used to create a new list from the existing one. If you come from other languages ​​like C/C++ or Java, you are used to seeing lists as vectors, but in haskell it is different, lists in haskell, just like in mathematics, are a set. Set is a fundamental concept in all branches of Mathematics. When we need to classify objects according to given criterion, we are forming a collection, that is, a set. In mathematics, the objects in a set can be numbers, people, letters, etc.
+
+##### Syntax
+
+Now that we know that you can use list comprehension to create a new list from one, let's look at the syntax for using list comprehension
+
+```[any_function variable_name | to bind <- your list]```
+
+> Note that we use the pipe operator '|' to prepare a comprehension list. Its syntax is a little complicated to understand, but we will give more examples to increase your understanding
+
+- **Example**
+
+```[toUpper x | x <- ["hello world"]```
+
+This comprehension takes each character x from the string "hello world" and applies the toUpper function to it, creating a new list of uppercase characters. Similarly, you can use list comprehensions with more complex expressions, combining multiple lists or applying filters to generate specific subsets.
 
 #### tuples 
 

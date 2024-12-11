@@ -43,6 +43,7 @@ Haskell emerged in the mid-1990s, with the aim of being the first purely functio
   - [What to expect from type inference?](#what-to-expect-from-type-inference)
   - [Conditional operations](#conditional-operations)
   - [Type creation](#type-creation)
+  - [Type classes](#type-classes)
 
 ### Introduction
 
@@ -606,4 +607,21 @@ ghci> myperson
 ("Bruno",22,"Haskell")
 ghci> 
 ```
+
+#### Type classes
+
+A typeclass is a type of interface that defines some behavior. If a type is part of a typeclass, it means that it supports and implements the behavior that the typeclass describes. Many people coming from OOP are confused by typeclasses because they think they are like classes in object-oriented languages. Well, they aren't. You can think of them like Java interfaces, only better.
+
+- What is the signature of the /= function?
+
+```
+ghci> :t (/=)
+(/=) :: Eq a => a -> a -> Bool
+```
+
+Yes, the difference operator is a function, like ==, +, -, *, or /.
+
+Everything before the => symbol is called a class constraint. We can read the previous type declaration like this: the difference function takes any two values ​​that are the same type and returns a Bool. The type of these two values ​​must be a member of the Eq class (that was the class restriction).
+
+An interesting thing to remember is that all standard Haskell types, except I/O (the type for handling input and output) and functions, are part of the Eq typeclass.
 
